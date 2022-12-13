@@ -37,6 +37,23 @@ function addButtonListeners() {
     numbers.forEach(number => number.addEventListener('click', typeNum));
 }
 
+function addKeyboardListeners() {
+    document.querySelector('body').addEventListener("keyup", buttonPress);
+}
+
+function buttonPress(e){
+    if (e.shiftKey) {
+        //console.log(e.keyCode)
+        //add and multiply signs are special
+        if (e.keyCode == 187) {document.querySelector('#add').click()}
+        else if (e.keyCode == 56) {document.querySelector('#multiply').click()}
+    } else {
+        //console.log(e.keyCode)
+        button = document.querySelector(`[data-keycode="${e.keyCode}"]`)
+        if (button) {button.click()}
+    }
+}
+
 function display() {
     const display = document.querySelector('.display');
 
@@ -95,7 +112,8 @@ function selectOperator(e) {
 }
 
 function operateOn() {
-    document.querySelector('.currentOperator').classList.remove("currentOperator")
+    currOp = document.querySelector('.currentOperator')
+    if (currOp) {currOp.classList.remove("currentOperator")}
     if (operands[0] === "") {operands[0] = 0;}
     if (operands[1] === "") {operands[1] = 0;}
 
@@ -162,6 +180,5 @@ let current_operand = 0;
 
 setRadii(15);
 addButtonListeners();
+addKeyboardListeners();
 display();
-
-// ADD IN SUPPORT FOR KEYBOARD
